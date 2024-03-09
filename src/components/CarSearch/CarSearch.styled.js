@@ -1,7 +1,99 @@
 import styled from "styled-components";
 
 export const CarSearchWrapper = styled.div`
+  display: flex;
+  justify-content: center;
   & .carSearchSection {
     padding-top: 100px;
+  }
+  & .form {
+    display: flex;
+    column-gap: 18px;
+  }
+  & label {
+    position: relative;
+    & .text {
+      display: block;
+      margin-bottom: 8px;
+    }
+    color: ${(props) => props.theme.secondary};
+  }
+
+  & .carBrand {
+    width: 224px;
+  }
+
+  & .price {
+    width: 125px;
+  }
+
+  & .carMileage {
+    width: 320px;
+    display: flex;
+    flex-wrap: wrap;
+    & .text {
+      width: 100%;
+      color: ${(props) => props.theme.secondary};
+
+      margin-bottom: 8px;
+    }
+
+    & .label {
+      width: 160px;
+      display: flex;
+      height: 48px;
+
+      &.from {
+        border-right: 1px solid ${(props) => props.theme.inputBrd};
+
+        & .field {
+          border: 1px solid transparent;
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+          padding-left: 70px;
+        }
+
+        & .field:focus {
+          border: 1px solid ${(props) => props.theme.accent};
+        }
+      }
+
+      &.from::before {
+        content: "From";
+        position: absolute;
+        top: 50%;
+        left: 24px;
+        transform: translateY(-50%);
+      }
+
+      &.to {
+        & .field {
+          border: 1px solid transparent;
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
+          padding-left: 50px;
+        }
+        & .field:focus {
+          border: 1px solid ${(props) => props.theme.accent};
+        }
+      }
+
+      &.to::before {
+        content: "To";
+        position: absolute;
+        top: 50%;
+        left: 24px;
+        transform: translateY(-50%);
+      }
+      & .field {
+        width: 100%;
+        background-color: ${(props) => props.theme.inputBg};
+        outline: none;
+        transition: border-color 0.5s;
+      }
+    }
+  }
+  & .submitButton {
+    align-self: flex-end;
   }
 `;

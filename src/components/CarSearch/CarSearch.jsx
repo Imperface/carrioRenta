@@ -4,6 +4,10 @@ import { BRANDS } from "../../constants/brands";
 import { PRICES } from "../../constants/prices";
 import { Field, Form, Formik } from "formik";
 import { FormSelect } from "../FormSelect/FormSelect";
+import { Button } from "../Button/Button";
+import { theme } from "../../constants/theme";
+import { Notify } from "notiflix";
+
 export const CarSearch = () => {
   const getBrandsOptions = () => {
     return BRANDS.map((brand) => ({ value: brand, label: brand }));
@@ -16,8 +20,41 @@ export const CarSearch = () => {
     brand: "",
     price: "",
     mileageFrom: "",
+    mileageTo: "",
   };
+
   const onFormSubmit = (values) => {
+    const mileageFromValue = Number(values.mileageFrom);
+
+    if (isNaN(mileageFromValue)) {
+      Notify.failure("Mileage must be a number");
+      return;
+    }
+
+    if (mileageFromValue < 0) {
+      Notify.failure("Mileage cannot be less than zero");
+      // перекупи посміялись
+      return;
+    }
+
+    const mileageToValue = Number(values.mileageTo);
+
+    if (isNaN(mileageToValue)) {
+      Notify.failure("Mileage must be a number");
+      return;
+    }
+
+    console.log(mileageFromValue);
+
+    // if (values.mileageFrom && Number(typeof values.mileageFrom) !== "number") {
+    //   const a = 5;
+    //   console.log(a);
+    // }
+
+    // if (Number(values.mileageFrom) < 0) {
+    //
+    // }
+
     console.log(values);
   };
   // const a = async () => {
@@ -33,45 +70,51 @@ export const CarSearch = () => {
     <CarSearchWrapper>
       <Section className="carSearchSection">
         <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
-          <Form>
-            <label className="label">
-              Car brand
+          <Form className="form">
+            <label className="label carBrand">
+              <span className="text">Car brand</span>
               <Field
                 name="brand"
                 component={FormSelect}
                 options={getBrandsOptions()}
                 classNamePrefix="selectBrand"
                 placeholder="Select Brand"
+                className="field"
               />
             </label>
-            <label className="label">
-              Price/ 1 hour
+
+            <label className="label price">
+              <span className="text">Price/ 1 hour</span>
               <Field
                 name="price"
                 component={FormSelect}
                 options={getPricesOptions()}
                 classNamePrefix="selectPrice"
-                placeholder="Select Price"
+                placeholder=" $"
+                className="field"
               />
             </label>
-            <label className="label">
-              Car mileage / km
-              <Field name="mileageFrom" placeholder="From" type="number" />
-            </label>
-            <button type="submit">Submit</button>
-            {/* <label className="label">
-              Car brand
-              <Select
-                name="brand"
-                classNamePrefix="selectBrand"
-                placeholder="Select brand"
-                options={getBrandOptions()}
-              />
-            </label>
-            <label className="label">
-              Car brand
-              <input></input>
-            </label> */}
+
+            <div className="carMileage">
+              <span className="text">Car mileage / km</span>
+              <label className="label from">
+                <Field
+                  name="mileageFrom"
+                  type="text"
+                  className="field fromField"
+                />
+              </label>
+              <label className="label to">
+                <Field name="mileageTo" type="text" className="field toField" />
+              </label>
+            </div>
+            <Button
+              text="Search"
+              type="submit"
+              className="submitButton"
+              // isLoading={true}
+              loaderColor={theme.accentHover}
+            />
           </Form>
         </Formik>
       </Section>

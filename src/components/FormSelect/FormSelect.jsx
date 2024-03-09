@@ -1,4 +1,5 @@
 import Select from "react-select";
+import { FromSelectWrapper } from "./FormSelect.styled";
 
 export const FormSelect = ({
   options,
@@ -8,13 +9,15 @@ export const FormSelect = ({
   placeholder,
 }) => {
   return (
-    <Select
-      name="brand"
-      classNamePrefix={classNamePrefix}
-      placeholder={placeholder}
-      options={options}
-      value={options.find((option) => option.value === field.value)}
-      onChange={(option) => form.setFieldValue(field.name, option.value)}
-    />
+    <FromSelectWrapper>
+      <Select
+        name={field.name}
+        classNamePrefix={` ${classNamePrefix} selectStylesCommon`}
+        placeholder={placeholder}
+        options={options}
+        value={options.find((option) => option.value === field.value)}
+        onChange={(option) => form.setFieldValue(field.name, option.value)}
+      />
+    </FromSelectWrapper>
   );
 };

@@ -20,6 +20,7 @@ export const HeroWrapper = styled.div`
       width: 620px;
     }
     &Img {
+      border-radius: 20px;
     }
     &Text {
       display: flex;
