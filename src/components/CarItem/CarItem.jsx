@@ -74,7 +74,11 @@ export const CarItem = ({ car, setIsModalOpen, setModalData }) => {
   return (
     <CarItemWrapper>
       <div className="imageBlock">
-        <img src={car.img || car.photoLink || defaultCar} alt="car image" />
+        <img
+          loading="lazy"
+          src={car.img || car.photoLink || defaultCar}
+          alt="car image"
+        />
       </div>
       <div className="mainInfoBlock">
         <span className="make">{car.make} </span>

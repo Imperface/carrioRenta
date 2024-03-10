@@ -77,7 +77,11 @@ export const CarModal = ({ car, setIsModalOpen }) => {
           <RxCross2 size={24} />
         </button>
         <div className="imageBlock">
-          <img src={car.img || car.photoLink || defaultCar} alt="car image" />
+          <img
+            loading="lazy"
+            src={car.img || car.photoLink || defaultCar}
+            alt="car image"
+          />
         </div>
         <div className="mainInfoBlock">
           {car.model} <span className="make">{car.make}</span>, {car.year}
