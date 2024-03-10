@@ -50,6 +50,7 @@ export const CarModal = ({ car, setIsModalOpen }) => {
 
   const getRentalConditions = () => {
     const [minAge, license, security] = car.rentalConditions.split("\n");
+
     const age = minAge.match(/(\d+)/)[0];
 
     return (
