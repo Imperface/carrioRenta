@@ -99,7 +99,12 @@ export const CarModal = ({ car, setIsModalOpen }) => {
         </div>
         {getRentalConditions()}
 
-        <a className="rentalLink" href="tel:+380730000000">
+        <a
+          className="rentalLink"
+          href="tel:+380730000000"
+          rel="nofollow noopener"
+          target="_blank"
+        >
           Rental car
         </a>
       </div>
