@@ -28,29 +28,3 @@ By choosing us, you are choosing reliability
   When paying, you will be asked only for the amount specified in the contract - additional commissions and other hidden payments are excluded
   
   We try to keep prices below market
-
-
-
-
-
-
-
-
-
-  
-
-
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
