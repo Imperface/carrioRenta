@@ -52,6 +52,7 @@ export const CarModal = ({ car, setIsModalOpen }) => {
     const [minAge, license, security] = car.rentalConditions.split("\n");
 
     const age = minAge.match(/(\d+)/)[0];
+    const price = car.rentalPrice.match(/(\d+)/)[0];
 
     return (
       <div className="conditionBlock">
@@ -64,8 +65,7 @@ export const CarModal = ({ car, setIsModalOpen }) => {
           Mileage: <span className="mileage">{car.mileage}</span>
         </span>
         <span>
-          Price:{" "}
-          <span className="price">{car.rentalPrice.match(/(\d+)/)[0]}$</span>
+          Price: <span className="price">{price}$</span>
         </span>
       </div>
     );

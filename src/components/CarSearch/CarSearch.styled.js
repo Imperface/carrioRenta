@@ -8,7 +8,9 @@ export const CarSearchWrapper = styled.div`
   }
   & .form {
     display: flex;
-    column-gap: 18px;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   & label {
     position: relative;
