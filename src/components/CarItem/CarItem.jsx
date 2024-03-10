@@ -4,12 +4,45 @@ import { Button } from "../Button/Button";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { theme } from "../../constants/theme";
+import { selectFavoriteCars } from "../../redux/cars/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import defaultCar from "../../image/defaultCar.jpeg";
+import { addToFavorite, removeFromFavorite } from "../../redux/cars/slices";
 
-export const CarItem = ({ car }) => {
-  const addToFavorite = (car) => {};
+export const CarItem = ({ car, setIsModalOpen, setModalData }) => {
+  const favotiteCars = useSelector(selectFavoriteCars);
 
-  const isFavoriteCar = (id) => {
-    return true;
+  const dispatch = useDispatch();
+
+  // looking for car in favorite
+  const isFavoriteCar = (id) =>
+    favotiteCars.find((favoriteCar) => favoriteCar.id === id);
+
+  const onFavoriteButtonClick = async (car) => {
+    if (isFavoriteCar(car.id)) {
+      // if car is favorite, dispatch removeFromFavorite action
+      const { error } = await dispatch(removeFromFavorite(car.id));
+
+      // if error, show notify failure
+      if (error) {
+        Notify.failure("Oops.. Something went wrong, please try again :(");
+        return;
+      }
+
+      Notify.success("Car removed from favorite");
+      return;
+    }
+
+    // if car is not favorite, dispatch addToFavorite action
+    const { error } = await dispatch(addToFavorite(car));
+
+    // if error, show notify failure
+    if (error) {
+      Notify.failure("Oops.. Something went wrong, please try again :(");
+      return;
+    }
+
+    Notify.success("Car added to favorite");
   };
 
   const getSecondaryInfo = () => {
@@ -23,7 +56,6 @@ export const CarItem = ({ car }) => {
     const [street, city, country] = car.address.split(", ");
 
     const premium = "Premium";
-    const suv = "Suv";
 
     return (
       <div className="secondaryInfoBlock">
@@ -31,17 +63,18 @@ export const CarItem = ({ car }) => {
         <span>{country} | </span>
         <span>{car.rentalCompany} |</span>
         <span>{premium} | </span>
-        <span>{suv} | </span>
+        <span>{car.type} | </span>
         <span>{car.model} | </span>
         <span>{car.id} | </span>
         <span>{car.accessories[0]}</span>
       </div>
     );
   };
+
   return (
     <CarItemWrapper>
       <div className="imageBlock">
-        <img src={car.img || car.photoLink} alt="car image" />
+        <img src={car.img || car.photoLink || defaultCar} alt="car image" />
       </div>
       <div className="mainInfoBlock">
         <span className="make">{car.make} </span>
@@ -52,41 +85,26 @@ export const CarItem = ({ car }) => {
 
       {getSecondaryInfo()}
 
-      <Button type="button" text="Learn more" className="button" />
-      <button type="button" className="favoriteButton">
-        {isFavoriteCar() ? (
+      <Button
+        type="button"
+        text="Learn more"
+        className="button"
+        onClick={() => {
+          setModalData(car);
+          setIsModalOpen(true);
+        }}
+      />
+      <button
+        type="button"
+        className="favoriteButton"
+        onClick={() => onFavoriteButtonClick(car)}
+      >
+        {isFavoriteCar(car.id) ? (
           <FaHeart color="red" size="18" />
         ) : (
           <FaRegHeart color={theme.mainRevers} size="18" />
         )}
       </button>
-      <div className="favorite"></div>
     </CarItemWrapper>
   );
 };
-// {
-// "id": 9582,
-// "year": 2008,
-// "make": "Buick",
-// "model": "Enclave",
-// "type": "SUV",
-// "img": "https://ftp.goit.study/img/cars-test-task/buick_enclave.jpeg",
-// "description": "The Buick Enclave is a stylish and spacious SUV known for its comfortable ride and luxurious features.",
-// "fuelConsumption": "10.5",
-// "engineSize": "3.6L V6",
-// "accessories": [
-// "Leather seats",
-// "Panoramic sunroof",
-// "Premium audio system"
-// ],
-// "functionalities": [
-// "Power liftgate",
-// "Remote start",
-// "Blind-spot monitoring"
-// ],
-// "rentalPrice": "$40",
-// "rentalCompany": "Luxury Car Rentals",
-// "address": "123 Example Street, Kiev, Ukraine",
-// "rentalConditions": "Minimum age: 25\nValid driver's license\nSecurity deposit required",
-// "mileage": 5858
-// },

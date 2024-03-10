@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const CarsListWrapper = styled.div`
   & .carsListSection {
-    padding-top: 100px;
+    padding: 100px 0;
   }
 
   & .carsList {

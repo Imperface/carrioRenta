@@ -21,10 +21,39 @@ export const CarSearchWrapper = styled.div`
 
   & .carBrand {
     width: 224px;
+
+    & .selectStylesCommon__placeholder {
+      color: ${(props) => props.theme.main};
+    }
   }
 
   & .price {
+    position: relative;
     width: 125px;
+    & .field {
+    }
+    & .selectStylesCommon__control {
+      padding-left: 25px;
+      &::before {
+        color: ${(props) => props.theme.main};
+
+        content: "To";
+        z-index: 1;
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+      }
+      &::after {
+        content: "$";
+        color: ${(props) => props.theme.main};
+        z-index: 1;
+        position: absolute;
+        top: 50%;
+        right: 50px;
+        transform: translateY(-50%);
+      }
+    }
   }
 
   & .carMileage {
@@ -64,6 +93,7 @@ export const CarSearchWrapper = styled.div`
         top: 50%;
         left: 24px;
         transform: translateY(-50%);
+        color: ${(props) => props.theme.main};
       }
 
       &.to {
@@ -84,6 +114,7 @@ export const CarSearchWrapper = styled.div`
         top: 50%;
         left: 24px;
         transform: translateY(-50%);
+        color: ${(props) => props.theme.main};
       }
       & .field {
         width: 100%;

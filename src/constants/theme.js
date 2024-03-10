@@ -7,4 +7,5 @@ export const theme = {
   secondary: "#8A8A89",
   inputBg: "rgba(247, 247, 251, 1)",
   inputBrd: "rgba(138, 138, 137, 0.2)",
+  modalOverlay: "rgba(18, 20, 23, 0.5)",
 };

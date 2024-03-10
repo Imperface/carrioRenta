@@ -6,14 +6,16 @@ import { Field, Form, Formik } from "formik";
 import { FormSelect } from "../FormSelect/FormSelect";
 import { Button } from "../Button/Button";
 import { theme } from "../../constants/theme";
-import { Notify } from "notiflix";
 
-export const CarSearch = () => {
+export const CarSearch = ({ onFormSubmit }) => {
   const getBrandsOptions = () => {
     return BRANDS.map((brand) => ({ value: brand, label: brand }));
   };
   const getPricesOptions = () => {
-    return PRICES.map((price) => ({ value: price, label: price }));
+    return PRICES.map((price) => ({
+      value: price,
+      label: Number(price.match(/(\d+)/)[0]),
+    }));
   };
 
   const initialValues = {
@@ -22,49 +24,6 @@ export const CarSearch = () => {
     mileageFrom: "",
     mileageTo: "",
   };
-
-  const onFormSubmit = (values) => {
-    const mileageFromValue = Number(values.mileageFrom);
-
-    if (isNaN(mileageFromValue)) {
-      Notify.failure("Mileage must be a number");
-      return;
-    }
-
-    if (mileageFromValue < 0) {
-      Notify.failure("Mileage cannot be less than zero");
-      // перекупи посміялись
-      return;
-    }
-
-    const mileageToValue = Number(values.mileageTo);
-
-    if (isNaN(mileageToValue)) {
-      Notify.failure("Mileage must be a number");
-      return;
-    }
-
-    console.log(mileageFromValue);
-
-    // if (values.mileageFrom && Number(typeof values.mileageFrom) !== "number") {
-    //   const a = 5;
-    //   console.log(a);
-    // }
-
-    // if (Number(values.mileageFrom) < 0) {
-    //
-    // }
-
-    console.log(values);
-  };
-  // const a = async () => {
-  //   const b = await axios.get(
-  //     "https://656920d8de53105b0dd6ba92.mockapi.io/carrioRenta"
-  //   );
-  //   const c = b.data.map((item) => item.rentalPrice);
-  //   console.log(c);
-  // };
-  // a();
 
   return (
     <CarSearchWrapper>
@@ -78,7 +37,7 @@ export const CarSearch = () => {
                 component={FormSelect}
                 options={getBrandsOptions()}
                 classNamePrefix="selectBrand"
-                placeholder="Select Brand"
+                placeholder="Enter the text"
                 className="field"
               />
             </label>
@@ -90,7 +49,7 @@ export const CarSearch = () => {
                 component={FormSelect}
                 options={getPricesOptions()}
                 classNamePrefix="selectPrice"
-                placeholder=" $"
+                placeholder=""
                 className="field"
               />
             </label>

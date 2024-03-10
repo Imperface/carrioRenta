@@ -11,7 +11,26 @@ const initialState = {
 const carsSlice = createSlice({
   name: "cars",
   initialState,
-  reducers: {},
+  reducers: {
+    addToFavorite: (state, { payload }) => {
+      state.favorite.unshift(payload);
+      // return { ...state, favorite: [payload, ...state.favorite] };
+    },
+    removeFromFavorite: (state, { payload }) => {
+      if (!state.favorite.length) {
+        return;
+      }
+
+      if (state.favorite.length === 1) {
+        state.favorite = [];
+        return;
+      }
+      state.favorite = state.favorite.filter((car) => car.id !== payload);
+
+      // ...state,
+      // favorite: state.favorite.filter((car) => car.id !== payload),
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllCarsThunk.fulfilled, (state, { payload }) => {
@@ -41,3 +60,5 @@ const arrayRequests = [getAllCarsThunk];
 const getRequests = (type) => arrayRequests.map((action) => action[type]);
 
 export const carsReducer = carsSlice.reducer;
+
+export const { addToFavorite, removeFromFavorite } = carsSlice.actions;
